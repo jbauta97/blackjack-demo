@@ -37,6 +37,8 @@
         grid-template-columns: repeat(4, 1fr);
         border: 1px solid #000;
         border-radius: 8px;
+        gap: 4px;
+        padding: 4px;
     }
     @media (max-width: 640px) {
 		.cards-grid {

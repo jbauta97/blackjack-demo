@@ -19,6 +19,7 @@
         });
         let odds = (($deckNum*4) - cardCount) / totalCards;
         pCard = 100*odds;
+        pCard = parseInt(100*pCard)/100;
         return odds;
     }
     function decrement(){
@@ -43,6 +44,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 8px;
+        background: #1f1f23;
+        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
     }
     .stepper{
         display:flex;

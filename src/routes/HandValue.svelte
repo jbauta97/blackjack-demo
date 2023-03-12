@@ -61,6 +61,7 @@
         let smallCards = $twoCount + $threeCount + $fourCount + $fiveCount + $sixCount;
         tradCount = smallCards - bigCards;
         trueCount = penetration * tradCount;
+        trueCount = parseInt(100*trueCount)/100;
     }
     function get10Odds(){
         let totalCards = 0;
@@ -72,6 +73,7 @@
             }
         });
         tenOdds = 100*(tens / totalCards);
+        tenOdds = parseInt(100*tenOdds)/100;
     }
     function clearHand(){
         handVal = 0;

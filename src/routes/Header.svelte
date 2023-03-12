@@ -38,6 +38,8 @@
         display: block;
         width: 100%;
         padding: 8px;
+        background-color: #18181b;
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 90%), 0 0px 2px rgba(0,0,0,.9);
     }
     .settings-popup{
         position: fixed;
