@@ -38,4 +38,9 @@
         border: 1px solid #000;
         border-radius: 8px;
     }
+    @media (max-width: 640px) {
+		.cards-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 </style>
