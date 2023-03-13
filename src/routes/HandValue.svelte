@@ -19,6 +19,7 @@
     let tradCount = 0;
     let trueCount = 0;
     let tenOdds = 0;
+    let penString = '';
 
     shoe.subscribe(onUpdate => {
         getBustOdds();
@@ -58,6 +59,7 @@
         });
         let maxCards = $deckNum * 52;
         let penetration = (maxCards - totalCards) / maxCards;
+        penString = `${maxCards-totalCards} / ${maxCards}`;
         let bigCards = $tenCount + $jackCount + $queenCount + $kingCount + $aceCount;
         let smallCards = $twoCount + $threeCount + $fourCount + $fiveCount + $sixCount;
         tradCount = smallCards - bigCards;
@@ -87,7 +89,7 @@
     <button class="hand-clear" on:click={clearHand}>Clear</button>
 </div>
 <div class="bust-prob">{pBust}% chance of busting on next hit</div>
-<div class="trad-count">Traditional count is {tradCount}. True count is {trueCount}</div>
+<div class="trad-count">Hi-Lo count is {tradCount}. True count is {trueCount}. Penetration: {penString}</div>
 <div>{tenOdds}% chance next card is a 10/face(doesn't include aces)</div>
 <style>
     .handValue{

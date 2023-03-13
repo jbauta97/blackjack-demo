@@ -49,6 +49,7 @@
         padding: 8px;
         background: #1f1f23;
         box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
+        width: calc(100% - 16px);
     }
     .stepper{
         display:flex;
@@ -71,6 +72,9 @@
     .stepper-btn{
         width: 48px;
         height: 48px;
+    }
+    .card-prob{
+        font-size: .97rem;
     }
 
 </style>
