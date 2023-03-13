@@ -38,6 +38,7 @@
         });
         let odds = bustCards / totalCards;
         pBust = 100*odds;
+        pBust = parseInt(100*pBust)/100;
     }
     function getCardValue(card){
         if (card === 'A'){

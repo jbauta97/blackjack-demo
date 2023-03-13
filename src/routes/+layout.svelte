@@ -17,13 +17,17 @@
     import { queenCount } from './stores';
     import { kingCount } from './stores';
 	import { shoe } from './stores';
+    import DealerOdds from './DealerOdds.svelte';
 </script>
 
 <div class="app">
 	<Header></Header>
 
 	<main>
-		<HandValue></HandValue>
+		<div class="odds-wrapper">
+			<div><DealerOdds /></div>
+			<div><HandValue></HandValue></div>
+		</div>
 		<CardControls></CardControls>
 	</main>
 
@@ -49,10 +53,18 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
+	.odds-wrapper{
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.odds-wrapper div{
+		width: 100%;
+	}
 
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
+	@media (max-width: 640px) {
+		.odds-wrapper{
+			flex-direction: column;
 		}
 	}
 
