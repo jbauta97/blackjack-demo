@@ -13,7 +13,6 @@
 
     function getOdds(){
         let totalCards = 0;
-        console.log($shoe);
         Object.keys($shoe).forEach(card => {
             totalCards += $shoe[card];
         });
@@ -44,7 +43,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 1px solid #ccc;
         border-radius: 4px;
         padding: 8px;
         background: #1f1f23;

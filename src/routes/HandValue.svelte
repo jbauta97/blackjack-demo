@@ -14,6 +14,7 @@
     import { jackCount } from './stores';
     import { queenCount } from './stores';
     import { kingCount } from './stores';
+    import { countStrategy } from './stores';
     let handVal = 0;
     let pBust = 0;
     let tradCount = 0;
@@ -89,7 +90,7 @@
     <button class="hand-clear" on:click={clearHand}>Clear</button>
 </div>
 <div class="bust-prob">{pBust}% chance of busting on next hit</div>
-<div class="trad-count">Hi-Lo count is {tradCount}. True count is {trueCount}.</div>
+<div class="trad-count">{$countStrategy} count is {tradCount}. True count is {trueCount}.</div>
 <div>Penetration: {penString}</div>
 <div>{tenOdds}% chance next card is a 10/face(doesn't include aces)</div>
 <style>

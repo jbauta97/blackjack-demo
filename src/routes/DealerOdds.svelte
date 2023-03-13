@@ -99,6 +99,10 @@
     .card-select{
         display: grid;
         grid-template-columns: repeat(5, 1fr);
+        background-color: #fff1;
+        border: none;
+        padding: 16px;
+        border-radius: 8px;
     }
     .card-select input{
         display: none;

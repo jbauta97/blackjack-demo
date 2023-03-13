@@ -14,6 +14,7 @@ export const tenCount = writable(0);
 export const jackCount = writable(0);
 export const queenCount = writable(0);
 export const kingCount = writable(0);
+export const countStrategy = writable('Hi-Lo');
 
 export const shoe = derived(
     [deckNum, aceCount, twoCount, threeCount, fourCount, fiveCount, sixCount, sevenCount, eightCount, nineCount, tenCount, jackCount, queenCount, kingCount],
