@@ -96,4 +96,15 @@
     .setting-label{
         font-size: 1.2rem;
     }
+    @media (max-width: 640px) {
+        .settings-popup{
+            max-width: 100vw;
+        }
+		.settings-grid {
+			grid-template-columns: repeat(1, 1fr);
+		}
+        .setting-option{
+            justify-content: space-between;
+        }
+	}
 </style>
