@@ -17,7 +17,7 @@
     import { countStrategy } from './stores';
     let handVal = 0;
     let pBust = 0;
-    let tradCount = 0;
+    let count = 0;
     let trueCount = 0;
     let tenOdds = 0;
     let penString = '';
@@ -61,10 +61,19 @@
         let maxCards = $deckNum * 52;
         let penetration = (maxCards - totalCards) / maxCards;
         penString = `${maxCards-totalCards} / ${maxCards}`;
-        let bigCards = $tenCount + $jackCount + $queenCount + $kingCount + $aceCount;
-        let smallCards = $twoCount + $threeCount + $fourCount + $fiveCount + $sixCount;
-        tradCount = smallCards - bigCards;
-        trueCount = penetration * tradCount;
+        switch ($countStrategy){
+            case 'Hi-Lo': 
+                let bigCards = $tenCount + $jackCount + $queenCount + $kingCount + $aceCount;
+                let smallCards = $twoCount + $threeCount + $fourCount + $fiveCount + $sixCount;
+                count = smallCards - bigCards;
+            case 'Hi-Opt II':
+                let tencards = $tenCount + $jackCount + $queenCount + $kingCount;
+                count = $twoCount+$threeCount+(2*$fourCount)+(2*$fiveCount)+$sixCount+$sevenCount+(-2*tencards);
+            case 'Zen':
+                let tens = $tenCount + $jackCount + $queenCount + $kingCount;
+                count = $twoCount-$aceCount+$threeCount+(2*$fourCount)+(2*$fiveCount)+(2*$sixCount)+$sevenCount-(2*tens)
+        }
+        trueCount = penetration * count;
         trueCount = parseInt(100*trueCount)/100;
     }
     function get10Odds(){
@@ -90,7 +99,7 @@
     <button class="hand-clear" on:click={clearHand}>Clear</button>
 </div>
 <div class="bust-prob">{pBust}% chance of busting on next hit</div>
-<div class="trad-count">{$countStrategy} count is {tradCount}. True count is {trueCount}.</div>
+<div class="trad-count">{$countStrategy} count is {count}. True count is {trueCount}.</div>
 <div>Penetration: {penString}</div>
 <div>{tenOdds}% chance next card is a 10/face(doesn't include aces)</div>
 <style>
