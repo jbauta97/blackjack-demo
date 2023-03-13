@@ -45,6 +45,8 @@
 		padding: 1em;
 		margin: 0 auto;
 		margin-top: 48px;
+		width: 100%;
+		max-width: 1200px;
 	}
 
 	h1 {
@@ -63,6 +65,9 @@
 	}
 
 	@media (max-width: 640px) {
+		main{
+			max-width: calc(100vw - 48px);
+		}
 		.odds-wrapper{
 			flex-direction: column;
 		}
