@@ -47,8 +47,15 @@ input:disabled {
 
 button {
 	color: #333;
-	background-color: #f4f4f4;
+	background-color: #fff;
 	outline: none;
+	border: none;
+	cursor: pointer;
+	transition: .2s ease-in-out;
+}
+button:hover{
+	background-color: #e2e2e2;
+	box-shadow: inset 0 0 0 1px #000;
 }
 
 button:disabled {

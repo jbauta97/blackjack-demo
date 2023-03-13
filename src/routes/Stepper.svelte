@@ -57,6 +57,7 @@
     .stepper-quantity{
         text-align: center;
         width: 48px;
+        height: 48px;
         padding: 8px;
     }
     input[type='number']::-webkit-inner-spin-button, 
@@ -72,6 +73,22 @@
     .stepper-btn{
         width: 48px;
         height: 48px;
+        cursor: pointer;
+        transition: background .2s ease-in-out;
+        background-color: #fff;
+        font-size: 1.5rem;
+        line-height: 1rem;
+    }
+    .stepper-btn:hover{
+        box-shadow: inset 0 0 0 1px #000;
+        border: 1px solid #000;
+    }
+    .stepper-btn.btn-inc:hover{
+        background-color: #e2e2e2;
+        font-weight: 700;
+    }
+    .stepper-btn.btn-dec:hover{
+        background-color: #e2e2e2;
     }
     .card-prob{
         font-size: .97rem;

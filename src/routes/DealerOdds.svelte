@@ -112,6 +112,12 @@
         align-items: center;
         font-weight: 400;
         transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+    .card-select label:hover{
+        box-shadow: inset 0 0 0 1px #000;
+        font-weight: 700;
+        border-radius: 4px;
     }
     .card-select input:checked + label{
         box-shadow: inset 0 0 0 2px #000;
