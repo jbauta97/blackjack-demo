@@ -35,3 +35,5 @@ export const shoe = derived(
         'A': (4*$deckNum)-$aceCount
     }
 });
+
+

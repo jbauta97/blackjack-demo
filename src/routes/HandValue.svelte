@@ -66,12 +66,17 @@
                 let bigCards = $tenCount + $jackCount + $queenCount + $kingCount + $aceCount;
                 let smallCards = $twoCount + $threeCount + $fourCount + $fiveCount + $sixCount;
                 count = smallCards - bigCards;
+                break;
             case 'Hi-Opt II':
                 let tencards = $tenCount + $jackCount + $queenCount + $kingCount;
                 count = $twoCount+$threeCount+(2*$fourCount)+(2*$fiveCount)+$sixCount+$sevenCount+(-2*tencards);
+                break;
             case 'Zen':
                 let tens = $tenCount + $jackCount + $queenCount + $kingCount;
-                count = $twoCount-$aceCount+$threeCount+(2*$fourCount)+(2*$fiveCount)+(2*$sixCount)+$sevenCount-(2*tens)
+                count = $twoCount-$aceCount+$threeCount+(2*$fourCount)+(2*$fiveCount)+(2*$sixCount)+$sevenCount-(2*tens);
+                break;
+            default:
+                console.log('ah crap');
         }
         trueCount = penetration * count;
         trueCount = parseInt(100*trueCount)/100;
