@@ -67,7 +67,8 @@
         Object.keys($shoe).forEach(card => {
             totalCards += $shoe[card];
             let cardVal = card ==='A' ? dealerVal > 10 ? 1 : 11 : getCardValue(card);
-            if (dealerVal + cardVal > 16){
+            let totalVal = dealerVal+cardVal;
+            if (totalVal > 16 && totalVal!=21){
                 juicers += $shoe[card];
             }
         });
