@@ -28,8 +28,11 @@
 
     function handleDealerOdds(){
         if (dealerCardNum){
-            let dOdds = dealerbust2([dealerCardNum], $shoe, 0, 0);
-            dBustOdds = parseInt(10000*(dOdds[0]/dOdds[1]))/100;
+            let tmp = $shoe;
+            let deckComp = {...tmp};
+            let r = Object.keys(deckComp);
+            let bussin = calculateBustProb([dealerCardNum], deckComp, r);
+            dBustOdds = parseInt(10000*(bussin))/100;;
         }
     }
 
@@ -72,65 +75,71 @@
         juicerOdds = parseInt(100*juicerOdds)/100;
     }
 
-    function dealerbust2(hand, shoe, bustOutcomes, totalOutcomes){
-        let bustas = bustOutcomes ? bustOutcomes:0;
-        let totals = totalOutcomes ? totalOutcomes:0;
-        //get odds of busting
-        //return same if we count if we dont wanna hit
-        //recursive call if dealer will keep hitting
-        let handValue = getHandValue(hand);
+    function calculateBustProb(hand, deckComposition, ranks) {
+        const handValue = getHandValue(hand);
         let isSoft = handIsSoft(hand);
-        if ((handValue > 17 && isSoft) || (handValue >= 17 && !isSoft)){
-            // hand is done
-            return [bustas, totals];
-        } else if(handValue > 21 && !isSoft){
-            // busts
-            let lastCardQty = parseInt(shoe[hand.slice(-1)[0]]);
-            return [bustas+lastCardQty, totals+lastCardQty];
+        if (handValue > 21 && !isSoft){
+            return 1;
         }
-        else{
-            // soft 17 or lower so continue to draw
-            Object.keys(shoe).forEach(card => {
-                if (shoe[card] > 0){
-                    let nextHand = [...hand, card];
-                    let nextHandValue = getHandValue(nextHand);
-                    let nextHandIsSoft = handIsSoft(nextHand);
-                    if (nextHandValue > 21 && !nextHandIsSoft){
-                        bustas += parseInt(shoe[card]);
-                        totals += parseInt(shoe[card]);
-                    }
-                    else if((nextHandValue > 17 && nextHandIsSoft) || (nextHandValue >= 17 && !nextHandIsSoft)){
-                        totals += parseInt(shoe[card]);
-                    }
-                    else {
-                        let nextShoe = {...shoe};
-                        nextShoe[card] -= 1;
-                        let deeperResults = dealerbust2(nextHand, nextShoe, bustas, totals);
-                        bustas += parseInt(deeperResults[0])
-                        totals += parseInt(deeperResults[1]);
-                    }
-                }
-            });
+        else if ((handValue > 17 && isSoft) || (handValue >= 17 && !isSoft)) {
+            return 0;
         }
-        return [bustas, totals];
+        let bustProb = 0;
+        let remainingCards = getShoeLength(deckComposition);
+        // Iterate over all possible cards that could be drawn
+        for (let i = 0; i < ranks.length; i++) {
+            let rank = ranks[i];
+            if (deckComposition[rank] > 0) {
+            // Calculate probability of drawing this card
+            let cardProb = deckComposition[rank] / remainingCards;
+            
+            // Decrement count for this rank in deckComposition
+            deckComposition[rank]--;
+
+            // Calculate probability of dealer busting with this card
+            let newHand = [...hand, rank];
+            let newDeckComposition = {...deckComposition};
+            let prob = calculateBustProb(newHand, newDeckComposition, ranks);
+            
+            // Weight probability by probability of drawing this card
+            bustProb += cardProb * prob;
+            
+            // Increment count for this rank in deckComposition
+            deckComposition[rank]++;
+            
+            // Increment total cards remaining in the deck
+            remainingCards++;
+            }
+        }
+        return bustProb;
     }
     
     function getHandValue(hand){
+        if (hand[0] == '0'){
+            hand = hand.slice(1);
+        }
         let handval = 0;
         let num_aces = count(hand, 'A');
+        const cardValues = {
+            'A': 11,
+            'K': 10,
+            'Q': 10,
+            'J': 10,
+            '10': 10,
+            '9': 9,
+            '8': 8,
+            '7': 7,
+            '6': 6,
+            '5': 5,
+            '4': 4,
+            '3': 3,
+            '2': 2
+        };
         let card_value = 0;
-        hand.forEach(card => {
-            if (card == 'A'){
-                card_value = 11;
-            }
-            else if (['K','Q','J'].includes(card)){
-                card_value = 10;
-            }
-            else{
-                card_value = getCardValue(card);
-            }
+        for (let i = 0; i < hand.length; i++) {
+            card_value = cardValues[hand[i]];
             handval += card_value;
-        });
+        }
         while (num_aces > 0 && handval > 21){
             handval -= 10;
             num_aces -= 1;
@@ -150,6 +159,8 @@
             return false;
         }
     }
+    // kind of like python's arr.count
+    // util to return num of occurences in an array
     function count(arr, value) {
         let count = 0;
         for (let i = 0; i < arr.length; i++) {
@@ -159,9 +170,16 @@
         }
         return count;
     }
+    function getShoeLength(thisShoe){
+        let c = 0;
+        Object.keys(thisShoe).forEach(card =>{
+            c += thisShoe[card];
+        });
+        return c;
+    }
 </script>
 <div class="dealer-wrapper">
-    <fieldset class="card-select" on:change={()=>{getDealerJuicerOdds()}}>
+    <fieldset class="card-select" on:change={()=>{getDealerJuicerOdds();handleDealerOdds();}}>
         <legend>Select a dealer up card:</legend>
         <input type="radio" id="card-A" name="dealer-card" value="card-A" bind:group={dealerCard}>
         <label for="card-A">A</label>
@@ -189,10 +207,12 @@
         <label for="card-Q">Q</label>
         <input type="radio" id="card-K" name="dealer-card" value="card-K" bind:group={dealerCard}>
         <label for="card-K">K</label>
+        <input type="radio" id="card-0" name="dealer-card" value="card-0" bind:group={dealerCard}>
+        <label for="card-0">0</label>
     </fieldset>
 </div>
 <div>{juicerOdds}% chance dealer has a 17 or higher</div>
-<div>Broken WIP {dBustOdds}% chance of dealer busting</div>
+<div>{dBustOdds}% chance of dealer busting</div>
 <style>
     .card-select{
         display: grid;
