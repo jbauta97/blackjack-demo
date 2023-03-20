@@ -137,12 +137,12 @@
         <label for="player-card-9-1">9</label>
         <input type="radio" id="player-card-10-1" name="player-card-1" value="card-10" bind:group={playerCard1}>
         <label for="player-card-10-1">10</label>
-        <input type="radio" id="player-card-J-1" name="player-card-1" value="card-J" bind:group={playerCard1}>
+        <!--<input type="radio" id="player-card-J-1" name="player-card-1" value="card-J" bind:group={playerCard1}>
         <label for="player-card-J-1">J</label>
         <input type="radio" id="player-card-Q-1" name="player-card-1" value="card-Q" bind:group={playerCard1}>
         <label for="player-card-Q-1">Q</label>
         <input type="radio" id="player-card-K-1" name="player-card-1" value="card-K" bind:group={playerCard1}>
-        <label for="player-card-K-1">K</label>
+        <label for="player-card-K-1">K</label>-->
         
         <input type="radio" id="player-card-A-2" name="player-card-2" value="card-A" bind:group={playerCard2}>
         <label for="player-card-A-2">A</label>
@@ -164,12 +164,12 @@
         <label for="player-card-9-2">9</label>
         <input type="radio" id="player-card-10-2" name="player-card-2" value="card-10" bind:group={playerCard2}>
         <label for="player-card-10-2">10</label>
-        <input type="radio" id="player-card-J-2" name="player-card-2" value="card-J" bind:group={playerCard2}>
+        <!--<input type="radio" id="player-card-J-2" name="player-card-2" value="card-J" bind:group={playerCard2}>
         <label for="player-card-J-2">J</label>
         <input type="radio" id="player-card-Q-2" name="player-card-2" value="card-Q" bind:group={playerCard2}>
         <label for="player-card-Q-2">Q</label>
         <input type="radio" id="player-card-K-2" name="player-card-2" value="card-K" bind:group={playerCard2}>
-        <label for="player-card-K-2">K</label>
+        <label for="player-card-K-2">K</label>-->
     </fieldset>
 </div>
 <div class="bust-prob">{pBust}% chance of busting on next hit</div>
@@ -202,7 +202,7 @@
     }
     .card-select{
         display: grid;
-        grid-template-columns: repeat(13, 1fr);
+        grid-template-columns: repeat(10, 1fr);
         background-color: #fff1;
         border: none;
         padding: 16px;

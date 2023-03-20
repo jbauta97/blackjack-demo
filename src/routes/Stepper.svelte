@@ -96,4 +96,16 @@
         font-size: .97rem;
     }
 
+    @media (max-width: 640px) {
+		.stepper-btn {
+			width: 36px;
+            height: 36px;
+            font-size: 1rem;
+		}
+        .stepper-quantity{
+            width: 24px;
+            height: 36px;
+        }
+	}
+
 </style>
