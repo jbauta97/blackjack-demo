@@ -92,8 +92,11 @@
         for (let i = 0; i < ranks.length; i++) {
             let rank = ranks[i];
             // skip dealer blackjack. We know they don't have blackjack since it would have already been revealed
-            if (hand.length==1 && handValue==10 && rank=='A'){continue;}
-            else if(hand.length==1 && hand[0]=='A' && (rank in ['10','J','Q','K'])){continue;}
+            // but dont skip when we start with 0 cause a blackjack is possible here
+            if (dealerCardNum != '0'){
+                if (hand.length==1 && handValue==10 && rank=='A'){continue;}
+                else if(hand.length==1 && hand[0]=='A' && (rank in ['10','J','Q','K'])){continue;}
+            }
             if (deckComposition[rank] > 0) {
                 // Calculate probability of drawing this card
                 let cardProb = deckComposition[rank] / remainingCards;

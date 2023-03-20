@@ -36,7 +36,6 @@
     function handlePlayerOdds(){
         if (!playerCard1Num || !playerCard2Num){playerCard1Num = '0';playerCard2Num='0';}
         handVal = getCardValue(playerCard1Num)+getCardValue(playerCard2Num);
-        console.log(handVal);
         getBustOdds();
     }
 
