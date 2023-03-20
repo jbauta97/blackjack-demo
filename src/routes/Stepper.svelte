@@ -32,10 +32,10 @@
     <div class="card-title">{cardName}</div>
     <div class="stepper">
         <button class="stepper-btn btn-dec" on:click={decrement}>-</button>
-        <input type="text" class="stepper-quantity" bind:value="{cardCount}" readonly>
+        <div class="stepper-quantity">{cardCount}</div>
         <button class="stepper-btn btn-inc" on:click={increment}>+</button>
     </div>
-    <div class="card-prob">{pCard}% chance next card is {cardName}</div>
+    <div class="card-prob">{pCard}%</div>
 </div>
 
 <style>
@@ -53,10 +53,13 @@
         display:flex;
     }
     .stepper-quantity{
-        text-align: center;
         width: 48px;
         height: 48px;
-        padding: 8px;
+        background-color: #fff;
+        color:#000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     input[type='number']::-webkit-inner-spin-button, 
     input[type='number']::-webkit-outer-spin-button { 
@@ -65,7 +68,7 @@
         width: 0px;
     }
     .card-title{
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
     }
     .stepper-btn{
@@ -76,6 +79,7 @@
         background-color: #fff;
         font-size: 1.5rem;
         line-height: 1rem;
+        margin: 0;
     }
     .stepper-btn:hover{
         box-shadow: inset 0 0 0 1px #000;
