@@ -27,13 +27,12 @@
     });
 
     function handleDealerOdds(){
-        if (dealerCardNum){
-            let tmp = $shoe;
-            let deckComp = {...tmp};
-            let r = Object.keys(deckComp);
-            let bussin = calculateBustProb([dealerCardNum], deckComp, r);
-            dBustOdds = parseInt(10000*(bussin))/100;;
-        }
+        if (!dealerCardNum){dealerCardNum = '0'}
+        let tmp = $shoe;
+        let deckComp = {...tmp};
+        let r = Object.keys(deckComp);
+        let bussin = calculateBustProb([dealerCardNum], deckComp, r);
+        dBustOdds = parseInt(10000*(bussin))/100;
     }
 
     function getCardValue(card){
@@ -80,9 +79,11 @@
         const handValue = getHandValue(hand);
         let isSoft = handIsSoft(hand);
         if (handValue > 21 && !isSoft){
+            // Dealer busts
             return 1;
         }
         else if ((handValue > 17 && isSoft) || (handValue >= 17 && !isSoft)) {
+            // Dealer finishes above 17 without busting
             return 0;
         }
         let bustProb = 0;
@@ -90,26 +91,29 @@
         // Iterate over all possible cards that could be drawn
         for (let i = 0; i < ranks.length; i++) {
             let rank = ranks[i];
+            // skip dealer blackjack. We know they don't have blackjack since it would have already been revealed
+            if (hand.length==1 && handValue==10 && rank=='A'){continue;}
+            else if(hand.length==1 && hand[0]=='A' && (rank in ['10','J','Q','K'])){continue;}
             if (deckComposition[rank] > 0) {
-            // Calculate probability of drawing this card
-            let cardProb = deckComposition[rank] / remainingCards;
-            
-            // Decrement count for this rank in deckComposition
-            deckComposition[rank]--;
+                // Calculate probability of drawing this card
+                let cardProb = deckComposition[rank] / remainingCards;
+                
+                // Decrement count for this rank in deckComposition
+                deckComposition[rank]--;
 
-            // Calculate probability of dealer busting with this card
-            let newHand = [...hand, rank];
-            let newDeckComposition = {...deckComposition};
-            let prob = calculateBustProb(newHand, newDeckComposition, ranks);
-            
-            // Weight probability by probability of drawing this card
-            bustProb += cardProb * prob;
-            
-            // Increment count for this rank in deckComposition
-            deckComposition[rank]++;
-            
-            // Increment total cards remaining in the deck
-            remainingCards++;
+                // Calculate probability of dealer busting with this card
+                let newHand = [...hand, rank];
+                let newDeckComposition = {...deckComposition};
+                let prob = calculateBustProb(newHand, newDeckComposition, ranks);
+                
+                // Weight probability by probability of drawing this card
+                bustProb += cardProb * prob;
+                
+                // Increment count for this rank in deckComposition
+                deckComposition[rank]++;
+                
+                // Increment total cards remaining in the deck
+                remainingCards++;
             }
         }
         return bustProb;
@@ -217,7 +221,7 @@
 <style>
     .card-select{
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(7, 1fr);
         background-color: #fff1;
         border: none;
         padding: 16px;
