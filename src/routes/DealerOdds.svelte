@@ -18,12 +18,17 @@
     let juicerOdds = 0;
     let dealerCard = 'card-0';
     let dBustOdds = 0;
+    let debounceTimerId;
     $: dealerCardNum = dealerCard.split('card-')[1];
 
     shoe.subscribe(onUpdate => {
         get7Odds();
         getDealerJuicerOdds();
-        handleDealerOdds();
+        const context = this;
+        const args = arguments;
+        clearTimeout(debounceTimerId);
+        debounceTimerId = setTimeout(() => handleDealerOdds.apply(context, args), 250);
+        //handleDealerOdds();
     });
 
     function handleDealerOdds(){
@@ -93,13 +98,15 @@
             let rank = ranks[i];
             // skip dealer blackjack. We know they don't have blackjack since it would have already been revealed
             // but dont skip when we start with 0 cause a blackjack is possible here
+            let aceBjScenario = hand.length==1 && handValue==10;
+            let tenBjScenario = hand.length==1 && hand[0]=='A';
             if (dealerCardNum != '0'){
-                if (hand.length==1 && handValue==10 && rank=='A'){continue;}
-                else if(hand.length==1 && hand[0]=='A' && (rank in ['10','J','Q','K'])){continue;}
+                if (aceBjScenario && rank=='A'){continue;}
+                else if(tenBjScenario && (rank in ['10','J','Q','K'])){continue;}
             }
             if (deckComposition[rank] > 0) {
                 // Calculate probability of drawing this card
-                let cardProb = deckComposition[rank] / remainingCards;
+                let cardProb = aceBjScenario ? deckComposition[rank]/(remainingCards-$shoe[ranks[12]]) : tenBjScenario ? deckComposition[rank]/(remainingCards-$shoe[ranks[8]]-$shoe[ranks[9]]-$shoe[ranks[10]]-$shoe[ranks[11]]):deckComposition[rank]/remainingCards;
                 
                 // Decrement count for this rank in deckComposition
                 deckComposition[rank]--;

@@ -44,10 +44,10 @@
         flex-direction: column;
         align-items: center;
         border-radius: 4px;
-        padding: 8px;
+        padding: 8px 0;
         background: #1f1f23;
         box-shadow: 0 2px 5px 0 rgb(0 0 0 / 26%);
-        width: calc(100% - 16px);
+        width: 100%;
     }
     .stepper{
         display:flex;
