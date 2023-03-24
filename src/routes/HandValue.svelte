@@ -32,6 +32,9 @@
         get10Odds();
         handlePlayerOdds();
     });
+    countStrategy.subscribe(onUpdate => {
+        getCount();
+    });
 
     function handlePlayerOdds(){
         if (!playerCard1Num || !playerCard2Num){playerCard1Num = '0';playerCard2Num='0';}

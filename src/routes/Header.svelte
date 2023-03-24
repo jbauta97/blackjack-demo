@@ -27,7 +27,7 @@
         <div class="settings-grid">
             <div class="setting-option">
                 <div class="setting-label">Decks:</div>
-                <input type="number" class="setting-input" bind:value="{$deckNum}" min="1" step="1">
+                <input type="number" class="setting-input" bind:value="{$deckNum}" min="1" max="12" step="1">
             </div>
             <div class="setting-option">
                 <div class="setting-label">Counting Strategy:</div>

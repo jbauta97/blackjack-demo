@@ -25,9 +25,8 @@
         get7Odds();
         getDealerJuicerOdds();
         const context = this;
-        const args = arguments;
         clearTimeout(debounceTimerId);
-        debounceTimerId = setTimeout(() => handleDealerOdds.apply(context, args), 250);
+        debounceTimerId = setTimeout(() => handleDealerOdds.apply(context), 250);
         //handleDealerOdds();
     });
 
