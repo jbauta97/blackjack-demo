@@ -1,8 +1,10 @@
 <script>
     import MenuDrawer from "./MenuDrawer.svelte";
     import { currentPage } from "./stores";
+    import isOpen from './MenuDrawer.svelte';
 
-    let leftNav
+    let leftNav;
+    let openMenu = false;
 
     function toggleMenu(){
         leftNav.openMenu();
@@ -12,9 +14,13 @@
 <div class="header">
     <div class="header-icons">
         <button class="btn icon-btn menu-icon-btn" on:click={toggleMenu}>
-            <svg viewBox="0 0 24 24" focusable="false" class="icon">
-                <g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g>
-            </svg>
+            {#if openMenu}
+                <svg class="icon" role="presentation" focusable="false" viewBox="0 0 24 24"><title>Close Menu</title> <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
+            {:else}
+                <svg viewBox="0 0 24 24" focusable="false" class="icon"><title>Open Menu</title>
+                    <g><path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path></g>
+                </svg>
+            {/if}
         </button>
         <div class="tabs">
             <a href="/stats" class="tabs-tab {$currentPage.includes('Statistics') ? 'tab-active':''}">Explore</a>
@@ -25,7 +31,7 @@
         <a class="logo" href="/">LOGO GOES HERE</a>
     </div>
 </div>
-<MenuDrawer bind:this={leftNav} isOpen={false}></MenuDrawer>
+<MenuDrawer bind:this={leftNav} bind:isOpen={openMenu}></MenuDrawer>
 <style>
     .header{
         position: fixed;
