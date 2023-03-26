@@ -42,6 +42,7 @@
 	@media (max-width: 640px) {
 		main{
 			max-width: 100vw;
+			margin-top: 80px;
 		}
 	}
 

@@ -113,4 +113,18 @@
     .tabs-tab.tab-active{
         box-shadow: inset 0 -16px 0px -12px #fff;
     }
+    @media (max-width: 640px) {
+        .header{
+            height: auto;
+            min-height: 60px;
+        }
+        .header-icons{
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .tabs{
+            width: 100%;
+        }
+    }
 </style>
