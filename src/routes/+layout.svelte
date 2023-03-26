@@ -3,10 +3,11 @@
 	import CardControls from "./stats/CardControls.svelte";
     import HandValue from "./stats/HandValue.svelte";
     import Header from "./Header.svelte";
+	import { bodyScrollable } from './stores';
 
 </script>
 
-<div class="app">
+<div class="app {$bodyScrollable ? '':'scroll-lock'}">
 	<Header></Header>
 
 	<main>
@@ -38,11 +39,14 @@
 		font-size: 4em;
 		font-weight: 100;
 	}
+	.scroll-lock{
+		overflow: hidden;
+		max-height: 100vh;
+	}
 
 	@media (max-width: 640px) {
 		main{
 			max-width: 100vw;
-			margin-top: 80px;
 		}
 	}
 

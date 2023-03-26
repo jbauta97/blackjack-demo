@@ -5,6 +5,7 @@
 	import { deckNum } from './stores';
     import { countStrategy } from './stores';
 	import { currentPage } from "../stores";
+	import { bodyScrollable } from '../stores';
 	
 	$currentPage = 'Statistics';
 
@@ -18,6 +19,7 @@
 	];
     function togglePopup(){
         isOpen = !isOpen;
+		$bodyScrollable = !isOpen;
         openClass = isOpen ? 'settings-popup--open' : '';
     }
 </script>

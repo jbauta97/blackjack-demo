@@ -1,5 +1,8 @@
 <script>
     import { currentPage } from "./stores";
+    import { bodyScrollable } from "./stores";
+    import { fly } from 'svelte/transition';
+    import { page } from "$app/stores";
     export let isOpen = false;
 
     const level2Stats = [
@@ -19,13 +22,15 @@
     let menuOffset = 0;
     let endX;
     $: $currentPage, closeMenu();
-       
+
 
     export function openMenu() {
         isOpen = !isOpen;
+        $bodyScrollable = !isOpen;
     }
     function closeMenu(){
         isOpen = false;
+        $bodyScrollable = true;
         menuOffset = 0;
         handleMenu();
     }
@@ -48,6 +53,7 @@
             case 'Learn/BasicStrategy':
                 menuLevel = 2;
                 activeMenu = level2Learn;
+                break;
             default:
                 console.log('Page not found');
         }
@@ -91,20 +97,19 @@
 </script>
 
 <div class="leftNav-drawer {isOpen ? 'drawer--open' : ''}" style="{menuOffset==0 ? '':'transition:transform 0s;transform:translate3d(calc(100vw + '+menuOffset+'px),0,0)'}">
-    <ul class="leftNav" on:touchstart={handleTouchStart} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd}>
+    <ul class="leftNav" on:touchstart={handleTouchStart} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd} transition:fly="{{x:50}}">
         {#if activeMenu != level1}
             <li><button class="menu-btn" on:click={handleBackButton}><svg class="icon menu-icon" role="presentation" focusable="false" viewBox="0 0 24 24"><title>Return</title> <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>Back</button></li>
         {/if}
         <li><a class="menu-link {$currentPage == 'Home'? 'menu-link--active':''}" href="/">Home</a></li>
         {#each activeMenu as menuItem}
             <li>
-                <a class="menu-link {$currentPage == menuItem.name ? 'menu-link--active':''}" href="{menuItem.link}">{menuItem.name}</a>
+                <a class="menu-link {$page.route.id == menuItem.link ? 'menu-link--active':''}" href="{menuItem.link}">{menuItem.name}</a>
                 {#if menuItem.expandable}
                     <button class="menu-btn menu-expand-btn" on:click={()=>{changeMenuLevel(menuItem.expandable)}}>+</button>
                 {/if}
             </li>
         {/each}
-        <li><br>More Coming Soon<br><br></li>
     </ul>
     <div class="drawer-backdrop" on:click={closeMenu}></div>
 </div>
@@ -114,7 +119,7 @@
         opacity: 0;
         position: fixed;
         pointer-events: none;
-        left: -300px;
+        left: -400px;
         top: 0;
         transition: opacity .1s ease-in-out, transform .2s ease-in-out;
         z-index: 10;
@@ -122,14 +127,14 @@
     .drawer--open{
         opacity: 1;
         pointer-events: all;
-        left: 0;
+        transform: translate3d(400px, 0, 0);
     }
     ul.leftNav{
         list-style: none;
         background-color: #18181b;
         height: 100vh;
-        width: 100%;
-        max-width: 256px;
+        width: 100vw;
+        max-width: 320px;
         position: relative;
         top: 60px;
         margin: 0;
@@ -139,7 +144,7 @@
     .drawer-backdrop{
         position: fixed;
         top: 0;
-        left: 0;
+        left: 320px;
         width: 100vw;
         height: 100vh;
         background-color: #0004;
@@ -206,6 +211,9 @@
         .drawer--open{
             /* left: 0; */
             transform: translate3d(100vw, 0, 0);
+        }
+        .drawer-backdrop{
+            display: none;
         }
     }
 </style>
