@@ -90,7 +90,7 @@
     }
 </script>
 
-<div class="leftNav-drawer {isOpen ? 'drawer--open' : ''}" style="{menuOffset==0 ? '':'transform:translate3d(calc(100vw + '+menuOffset+'px),0,0)'}">
+<div class="leftNav-drawer {isOpen ? 'drawer--open' : ''}" style="{menuOffset==0 ? '':'transition:transform 0s;transform:translate3d(calc(100vw + '+menuOffset+'px),0,0)'}">
     <ul class="leftNav" on:touchstart={handleTouchStart} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd}>
         {#if activeMenu != level1}
             <li><button class="menu-btn" on:click={handleBackButton}><svg class="icon menu-icon" role="presentation" focusable="false" viewBox="0 0 24 24"><title>Return</title> <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>Back</button></li>
