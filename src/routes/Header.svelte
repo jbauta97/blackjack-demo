@@ -17,8 +17,8 @@
             </svg>
         </button>
         <div class="tabs">
-            <a href="/stats" class="tabs-tab {$currentPage == 'Statistics' ? 'tab-active':''}">Explore</a>
-            <a href="/learn" class="tabs-tab {$currentPage == 'Learn' ? 'tab-active':''}">Learn</a>
+            <a href="/stats" class="tabs-tab {$currentPage.includes('Statistics') ? 'tab-active':''}">Explore</a>
+            <a href="/learn" class="tabs-tab {$currentPage.includes('Learn') ? 'tab-active':''}">Learn</a>
         </div>
     </div>
     <div class="logo-positioner">
@@ -114,17 +114,9 @@
         box-shadow: inset 0 -16px 0px -12px #fff;
     }
     @media (max-width: 640px) {
-        .header{
-            height: auto;
-            min-height: 60px;
-        }
-        .header-icons{
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-        .tabs{
-            width: 100%;
+        .logo-positioner{
+            width: fit-content;
+            left: 72px;
         }
     }
 </style>

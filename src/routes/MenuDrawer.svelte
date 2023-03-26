@@ -6,7 +6,8 @@
         {name: 'Statistics', link: '/stats'}
     ];
     const level2Learn = [
-        {name: 'Learn', link: '/learn'}
+        {name: 'Learn', link: '/learn'},
+        {name: 'Basic Strategy', link: '/learn/BasicStrategy'}
     ];
     const level1 = [
         {name: 'Statistics', link: '/stats', expandable: level2Stats},
@@ -14,7 +15,10 @@
     ];
     let menuLevel;
     let activeMenu;
-    $: $currentPage, handleMenu();
+    let startX;
+    let menuOffset = 0;
+    let endX;
+    $: $currentPage, closeMenu();
        
 
     export function openMenu() {
@@ -22,6 +26,7 @@
     }
     function closeMenu(){
         isOpen = false;
+        menuOffset = 0;
         handleMenu();
     }
     function handleMenu(){
@@ -40,6 +45,9 @@
                 menuLevel = 2;
                 activeMenu = level2Learn;
                 break;
+            case 'Learn/BasicStrategy':
+                menuLevel = 2;
+                activeMenu = level2Learn;
             default:
                 console.log('Page not found');
         }
@@ -54,10 +62,36 @@
             activeMenu = level1;
         }
     }
+    
+    function handleTouchStart(event) {
+        // record the starting touch position
+        startX = event.touches[0].clientX;
+        endX = startX;
+    }
+    function handleTouchMove(event) {
+        // calculate the distance of the touch move
+        endX =  event.touches[0].clientX;
+        let distance = endX - startX;
+
+        // if the user has moved their finger more than 50 pixels to the left, close the menu
+        if (distance < -20) {
+            menuOffset = distance;
+        }
+        else{
+            menuOffset = 0;
+        }
+    }
+    function handleTouchEnd(event){
+        let distance = endX - startX;
+        menuOffset = 0;
+        if (distance < -100) {
+            closeMenu();
+        }
+    }
 </script>
 
-<div class="leftNav-drawer {isOpen ? 'drawer--open' : ''}">
-    <ul class="leftNav">
+<div class="leftNav-drawer {isOpen ? 'drawer--open' : ''}" style="{menuOffset==0 ? '':'transform:translate3d(calc(100vw + '+menuOffset+'px),0,0)'}">
+    <ul class="leftNav" on:touchstart={handleTouchStart} on:touchmove={handleTouchMove} on:touchend={handleTouchEnd}>
         {#if activeMenu != level1}
             <li><button class="menu-btn" on:click={handleBackButton}><svg class="icon menu-icon" role="presentation" focusable="false" viewBox="0 0 24 24"><title>Return</title> <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg>Back</button></li>
         {/if}
@@ -82,7 +116,7 @@
         pointer-events: none;
         left: -300px;
         top: 0;
-        transition: opacity .1s ease-in-out, left .2s ease-in-out;
+        transition: opacity .1s ease-in-out, transform .2s ease-in-out;
         z-index: 10;
     }
     .drawer--open{
@@ -96,7 +130,7 @@
         height: 100vh;
         width: 100%;
         max-width: 256px;
-        position: fixed;
+        position: relative;
         top: 60px;
         margin: 0;
         padding: 16px 0;
@@ -166,10 +200,12 @@
             left: -100vw;
         }
         ul.leftNav{
+            width: 100vw;
             max-width: 100vw;
         }
         .drawer--open{
-            left: 0;
+            /* left: 0; */
+            transform: translate3d(100vw, 0, 0);
         }
     }
 </style>
