@@ -7,7 +7,7 @@
 
 </script>
 
-<div class="app {$bodyScrollable ? '':'scroll-lock'}">
+<div class="app{$bodyScrollable ? '':' scroll-lock'}">
 	<Header></Header>
 
 	<main>
