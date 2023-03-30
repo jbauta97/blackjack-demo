@@ -6,7 +6,8 @@
     export let isOpen = false;
 
     const level2Stats = [
-        {name: 'Statistics', link: '/stats'}
+        {name: 'Statistics', link: '/stats'},
+        {name: 'Strategies', link: '/stats/strategies'}
     ];
     const level2Learn = [
         {name: 'Learn', link: '/learn'},
@@ -56,6 +57,10 @@
             case 'Learn/BasicStrategy':
                 menuLevel = 2;
                 activeMenu = level2Learn;
+                break;
+            case 'stats/strategies':
+                menuLevel = 2;
+                activeMenu = level2Stats;
                 break;
             default:
                 console.log('Page not found');
