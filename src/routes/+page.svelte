@@ -12,6 +12,7 @@
 	Home
 	<p>Hello this is a brief introduction to the site showcasing our purpose and how it can benefit our users.</p>
 	<p>Maybe put an ad here idk. Or a CTA</p>
+	<p><a href="stake.us/?c=a050028c33">Start playing for real here</a></p>
 	<div class="showcase">
 		<ul>Here are some interactive tools you can use for your research/practice
 			<li><a href='/stats'>Statistics/odds tool</a></li>
